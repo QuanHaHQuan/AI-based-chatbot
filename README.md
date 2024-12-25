@@ -16,8 +16,9 @@ Due to file upload restrictions on the website, two transformer models used in t
 You need to download:
 
 roberta-base-squad2 model
-distilbert-base-nli-mean-tokens model
 
+
+distilbert-base-nli-mean-tokens model
 
 The required models for the question-answering system are stored in ./distilbert-base-nli-mean-tokens and ./roberta-base-squad2. The whl file for PyAudio compatible with Python 3.7 is ./PyAudio-0.2.11-cp37-cp37m-win_amd64.whl. Other library files can be directly downloaded via pip install.
 
