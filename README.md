@@ -13,12 +13,11 @@ Before running the project, please install the required libraries according to t
 
 Due to file upload restrictions on the website, two transformer models used in the code are stored on Baidu Cloud. Please download them and store them in the root directory of the source code as follows. If you have any questions, please contact the developer using the contact details at the end of the report.
 
-roberta-base-squad2 model:
+You need to download:
 
-Input image description
-distilbert-base-nli-mean-tokens model:
+roberta-base-squad2 model
+distilbert-base-nli-mean-tokens model
 
-Input image description
 
 The required models for the question-answering system are stored in ./distilbert-base-nli-mean-tokens and ./roberta-base-squad2. The whl file for PyAudio compatible with Python 3.7 is ./PyAudio-0.2.11-cp37-cp37m-win_amd64.whl. Other library files can be directly downloaded via pip install.
 
