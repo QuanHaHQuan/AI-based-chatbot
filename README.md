@@ -11,12 +11,9 @@ The core Q&A part of this project is built using a close-domain extraction-based
 ## Installation Guide
 Before running the project, please install the required libraries according to the information in the code and configure the necessary environment. This project is developed using Python 3.7.
 
-Due to file upload restrictions on the website, two transformer models used in the code are stored on Baidu Cloud. Please download them and store them in the root directory of the source code as follows. If you have any questions, please contact the developer using the contact details at the end of the report.
-
 You need to download:
 
 roberta-base-squad2 model
-
 
 distilbert-base-nli-mean-tokens model
 
