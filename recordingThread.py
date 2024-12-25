@@ -3,17 +3,17 @@ import pyaudio
 import wave
 import threading
 
-CHUNK_SIZE = 1024                    # wav文件是由若干个CHUNK组成的，CHUNK我们就理解成数据包或者数据片段。
-FORMAT = pyaudio.paInt16             # 这个参数后面写的pyaudio.paInt16表示我们使用量化位数 16位来进行录音。
-CHANNELS = 1                         # 代表的是声道，这里使用的单声道。
-SAMPLE_RATE = 16000                  # 采样率16k
-REC_QUESTION_WAV = "recQuestion.wav" # 输出文件名
+CHUNK_SIZE = 1024                    # The wav file is composed of several CHUNKS, which can be understood as data packets or data fragments.
+FORMAT = pyaudio.paInt16             # This parameter pyaudio.paInt16 means we use 16-bit quantization for recording.
+CHANNELS = 1                         # Represents the audio channel, here using mono.
+SAMPLE_RATE = 16000                  # Sampling rate 16k
+REC_QUESTION_WAV = "recQuestion.wav" # Output file name
 
-isRecording = False                  # 是否正在录音
+isRecording = False                  # Whether recording is in progress
 pya = pyaudio.PyAudio()
 pyaStream = 0
 pyaFrames = []
-thRec = threading.Thread()           # 录音线程
+thRec = threading.Thread()           # Recording thread
 thRec.start()
 thRec.join()
 
