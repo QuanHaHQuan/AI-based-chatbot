@@ -14,43 +14,43 @@ import cv2
 import numpy as np
 import time
 import matplotlib as plt
-#初始化窗口
+
+# Initialize the window
 class MyWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         name = facerecognition.recognition()
         super(MyWindow, self).__init__(parent)
         self.setupUi(self)
-        self.output.append("hello "+name)
-        TTS("hello"+name)
+        self.output.append("hello " + name)
+        TTS("hello" + name)
     
-    #录音
+    # Start recording
     def MakeVoice(self):
         startRecording()
     
-    #停止录音
+    # Stop recording
     def EndVoice(self):
-        self.plainTextEdit.setPlainText("正在回答~")
+        self.plainTextEdit.setPlainText("Answering~")
         stopRecording()
-        # 转文本
+        # Convert to text
         thBaiduYuYin = QA.BaiduYuYinThread()
         thBaiduYuYin.start()
-        Question=thBaiduYuYin.run()
+        Question = thBaiduYuYin.run()
         #self.input.clear()
         self.input.append(Question)
         thBaiduYuYin.join()
-        # 回答
+        # Respond
         thQA_fun = QA.QA_funThread(Question)
         thQA_fun.start()
-        Answer=thQA_fun.run()
+        Answer = thQA_fun.run()
         #self.output.clear()
         self.output.append(Answer)
         TTS(Answer)
         thQA_fun.join()
-        self.plainTextEdit.setPlainText("等待问题中~")
+        self.plainTextEdit.setPlainText("Waiting for the question~")
 
 if __name__ == '__main__':
-    # 创建窗口实例
-    
+    # Create window instance
     app = QtWidgets.QApplication(sys.argv)
     myWin = MyWindow()
     myWin.show()
