@@ -66,7 +66,7 @@ def group_intelligence():
     return res
     
     
-#虚拟形象的设置文件
+# Configuration file for virtual character settings
 class Config():
     ROOT_DIR = os.path.join(os.path.split(os.path.abspath(__file__))[0], 'resources')
     ACTION_DISTRIBUTION = [
@@ -85,9 +85,9 @@ class Config():
         ['42', '43', '44', '45', '46']
     ]
     PET_ACTIONS_MAP = {'pet_1': ACTION_DISTRIBUTION}
-    #for i in range(2, 5): PET_ACTIONS_MAP.update({'pet_%s' % i: ACTION_DISTRIBUTION})
+    # for i in range(2, 5): PET_ACTIONS_MAP.update({'pet_%s' % i: ACTION_DISTRIBUTION})
 
-#窗口绘制
+# Window rendering
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -99,29 +99,26 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
 
-        '''绘制虚拟形象 '''
+        '''Render the virtual character'''
         self.cfg = Config()
-        # 随机导入一个宠物
+        # Randomly load a pet
         self.pet_images, iconpath = self.randomLoadPetImages()
-        # 当前显示的图片 宠物的位置
+        # The currently displayed image, position of the pet
         self.image = QtWidgets.QLabel(self.centralwidget)
         self.image.setGeometry(QtCore.QRect(300, 20, 800, 300))
         self.setImage(self.image, self.pet_images[0][0])
         self.image.show()
-        # self.image = QLabel(self)
-        # self.setImage(self.pet_images[0][0])
-        # self.show()
-        # 宠物动画动作执行所需的一些变量
+        # Variables needed for pet animation actions
         self.is_running_action = False
         self.action_images = []
         self.action_pointer = 0
         self.action_max_len = 0
-        # 每隔一段时间做个动作
+        # Perform an action at intervals
         self.timer = QTimer()
         self.timer.timeout.connect(self.randomAct)
-        self.timer.start(800)#做动作的时间
+        self.timer.start(800) # Time for performing the action
 
-        '''绘制对话框、按钮 '''
+        '''Render dialog box and buttons'''
         self.output = QtWidgets.QTextBrowser(self.centralwidget)
         self.output.setGeometry(QtCore.QRect(70, 300, 661, 91))
         self.output.setStyleSheet("font: 75 16pt \"微软雅黑\";\n"
@@ -178,21 +175,21 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        # 录音按钮信号槽的连接，录制好的音频名为test.wav，时间为5s
+        # Signal-slot connection for the recording button; the recorded audio will be named test.wav, with a duration of 5 seconds
         self.voice.clicked.connect(lambda: MainWindow.MakeVoice())
         self.voiceEnd.clicked.connect(lambda: MainWindow.EndVoice())
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "智能AI皮卡丘"))
-        self.voice.setText(_translate("MainWindow", "开始说话"))
-        self.voiceEnd.setText(_translate("MainWindow", "停止说话"))
-        self.plainTextEdit.setPlainText(_translate("MainWindow", "等待问题中~"))
-        self.plainTextEdit_2.setPlainText(_translate("MainWindow", "点击按钮，将调用您的麦克风录制音频，和皮卡丘进行聊天吧~"))
-        self.pushButton.setText(_translate("MainWindow", "欢迎开始和智能AI皮卡丘的聊天!"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Smart AI Pikachu"))
+        self.voice.setText(_translate("MainWindow", "Start Speaking"))
+        self.voiceEnd.setText(_translate("MainWindow", "Stop Speaking"))
+        self.plainTextEdit.setPlainText(_translate("MainWindow", "Waiting for a question~"))
+        self.plainTextEdit_2.setPlainText(_translate("MainWindow", "Click the button to use your microphone to record audio and chat with Pikachu~"))
+        self.pushButton.setText(_translate("MainWindow", "Welcome to start chatting with Smart AI Pikachu!"))
 
-    # 随机做一个动作
+    # Perform a random action
     def randomAct(self):
         if not self.is_running_action:
             self.action_seq = group_intelligence()
@@ -203,7 +200,7 @@ class Ui_MainWindow(object):
                 self.action_pointer = 0
         self.runFrame()
 
-    # 完成动作的每一帧
+    # Complete each frame of the action
     def runFrame(self):
         if self.action_pointer == self.action_max_len:
             self.is_running_action = False
@@ -212,11 +209,11 @@ class Ui_MainWindow(object):
         self.setImage(self.image, self.action_images[self.action_pointer])
         self.action_pointer += 1
 
-    # 设置当前显示的图片
+    # Set the currently displayed image
     def setImage(self, label, image):
         label.setPixmap(QPixmap.fromImage(image))
 
-    # 导入一个桌面宠物的所有图片
+    # Load all images of a desktop pet
     def randomLoadPetImages(self):
         cfg = self.cfg
         pet_name = random.choice(list(cfg.PET_ACTIONS_MAP.keys()))
@@ -228,7 +225,7 @@ class Ui_MainWindow(object):
         iconpath = os.path.join(cfg.ROOT_DIR, pet_name, 'shime1.png')
         return pet_images, iconpath
 
-    # 导入图像
+    # Load an image
     def loadImage(self, imagepath):
         image = QImage()
         image.load(imagepath)
