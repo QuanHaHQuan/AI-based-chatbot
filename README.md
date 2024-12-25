@@ -26,4 +26,8 @@ To run the main program, enter python main.py in the command line. Ensure that y
 
 Facial data is stored in the facial_info folder. If a face is not in the dataset, it will be recognized as an unknown person. After recognizing the face, the main program will start, and the virtual character will greet you.
 
-Click the "Start Talking" button below to activate the microphone for recording. You can ask the AI questions related to Beijing Institute of Technology, such as "Who is the president of Beijing Institute of Technology?", "How many academicians does Beijing Institute of Technology have?", "How many students does Beijing Institute of Technology have?", and "What is the ranking of Beijing Institute of Technology?" For a complete list of questions, refer to the question set in Q&A pair_en.txt. After finishing the question, click the "Stop Talking" button. Wait a moment, and the AI will respond vocally.
+Click the "Start Talking" button below to activate the microphone for recording. 
+
+You can ask the AI questions related to Beijing Institute of Technology in Madrain, such as "Who is the president of Beijing Institute of Technology?", "How many academicians does Beijing Institute of Technology have?", "How many students does Beijing Institute of Technology have?", and "What is the ranking of Beijing Institute of Technology?" 
+
+For a complete list of questions, refer to the question set in Q&A pair_en.txt. After finishing the question, click the "Stop Talking" button. Wait a moment, and the AI will respond vocally.
