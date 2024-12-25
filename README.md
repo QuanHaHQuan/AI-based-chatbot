@@ -1,4 +1,4 @@
-# AI-based-chatbot
+# AI-based-chatbot (Madrain Version)
 ## Introduction
 This project is a virtual chatbot for Beijing Institute of Technology, implemented using artificial intelligence techniques such as artificial neural networks, machine learning, swarm intelligence, and symbolic intelligence. The key features of the system are as follows:
 
