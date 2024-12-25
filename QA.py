@@ -11,10 +11,10 @@ import re
 from recordingThread import startRecording, stopRecording
 from TextToSpeech import TTS
 
-REC_QUESTION_WAV = "recQuestion.wav"               # 提问生成的录音文件的文件名
+REC_QUESTION_WAV = "recQuestion.wav"               # The filename for the recorded question
 
-BaiduYuYinResult = ""  # 语音识别的结果
-thBaiduYuYin = threading.Thread()  # 语音识别线程
+BaiduYuYinResult = ""  # Result of speech recognition
+thBaiduYuYin = threading.Thread()  # Speech recognition thread
 thBaiduYuYin.start()
 thBaiduYuYin.join()
 
@@ -25,12 +25,12 @@ class BaiduYuYinThread(threading.Thread):
     def run(self):
         global BaiduYuYinResult
         try:
-            RATE = "16000"  # 采样率16KHz
-            FORMAT = "wav"  # wav格式
+            RATE = "16000"  # Sampling rate of 16KHz
+            FORMAT = "wav"  # wav format
             CUID = "wate_play"
-            DEV_PID = "1536"  # 无标点普通话
+            DEV_PID = "1536"  # Plain Mandarin without punctuation
             TOKEN = "24.8daf91b870cbf45e8f523ee4088edf2f.2592000.1642993060.282335-25410851"
-            # 以字节格式读取文件之后进行编码
+            # Encode the file in byte format after reading
             with open(REC_QUESTION_WAV, "rb") as f:
                 speech = base64.b64encode(f.read()).decode("utf8")
             size = os.path.getsize(REC_QUESTION_WAV)
@@ -50,7 +50,7 @@ class BaiduYuYinThread(threading.Thread):
             result = json.loads(req.text)
             BaiduYuYinResult = result["result"][0][:-1]
         except:
-            BaiduYuYinResult = "识别不清"
+            BaiduYuYinResult = "Recognition unclear"
         return BaiduYuYinResult
 
 final_ans = ""
@@ -75,7 +75,7 @@ class QA_funThread(threading.Thread):
         question.append('')
         answer.append('')
         f = open("./Q&A pair _en.txt", "r")
-        lines = f.read().splitlines()  # 读取全部内容 ，并以列表方式返回
+        lines = f.read().splitlines()  # Read all content and return it as a list
         for line in lines:
             res = re.search('[?]', line)
             if (res):
@@ -84,7 +84,7 @@ class QA_funThread(threading.Thread):
             elif (len(line) != 0):
                 answer.append(line)
 
-        # 通过有道翻译将输入的问题转换为英文
+        # Translate the input question to English using Youdao translation
         data = {
             'doctype': 'json',
             'type': 'AUTO',
@@ -95,20 +95,20 @@ class QA_funThread(threading.Thread):
         result = r.json()
         qua = result['translateResult'][0][0]['tgt']
 
-        # 将问题和问题库通过词向量进行编码转换
+        # Encode the question and question bank using word embeddings
         qua_embedding = self.model.encode(qua)
         Q_embeddings = self.model.encode(question)
 
         res = 0
         res_sen = -1
 
-        # 计算问题库中和提出问题最为相似的数据
+        # Calculate the most similar data in the question bank to the posed question
         for encod, i in zip(Q_embeddings, range(0, len(question))):
             sim = util.pytorch_cos_sim(Q_embeddings[i], qua_embedding)
             if res < sim:
                 res = sim
                 res_sen = i
-        # 从数据集中抽取对应的question和context, 进行抽取式的问答
+        # Extract the corresponding question and context from the dataset for extractive question answering
         ans = self.question_answerer({
             'question': question[res_sen],
             'context': answer[res_sen]
